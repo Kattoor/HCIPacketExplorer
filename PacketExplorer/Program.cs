@@ -2,50 +2,38 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 
 namespace PacketExplorer
 {
-    public class Buffer
-    {
-        private int _offset;
-
-        public List<byte> Bytes { private get; set; }
-
-        private byte[] Read(int amount) =>
-            PostIncrement(
-                Bytes
-                    .Skip(_offset)
-                    .Take(amount)
-                    .Reverse()
-                    .ToArray());
-
-        private byte[] PostIncrement(byte[] bytes)
-        {
-            _offset += bytes.Length;
-            return bytes;
-        }
-
-        public uint ReadUInt32() =>
-            BitConverter.ToUInt32(Read(4));
-
-        public ulong ReadUInt64() =>
-            BitConverter.ToUInt64(Read(8));
-
-        public byte[] ReadVariableLength(int size) =>
-            Read(size);
-
-        public bool Finished =>
-            _offset == Bytes.Count;
-    }
-
     internal static class Program
     {
         private static void Main()
         {
-            var buffer = new Buffer
+            Adb.ResetFile();
+            var offset = 0;
+            var count = 0;
+
+            while (true)
             {
-                Bytes = File.ReadAllBytes("btsnoop_hci.log").ToList().Skip(16).ToList()
-            };
+                Thread.Sleep(1000);
+                var content = Adb.FileContent(offset);
+
+                content = content.Length == 0 ? content : content.Substring(1);
+
+                var split = content.Split(" ");
+
+                if (split.Length <= 0 || split[0] == "") continue;
+                
+                var byteArray = split.Select(hex => Convert.ToByte(hex, 16)).ToArray();
+                offset += byteArray.Length;
+                ParseBytesToHci(byteArray, ++count);
+            }
+        }
+
+        private static void ParseBytesToHci(IEnumerable<byte> byteArray, int offset)
+        {
+            var buffer = new Buffer {Bytes = byteArray.ToList()};
 
             var packetRecords = new List<PacketRecord>();
 
@@ -64,7 +52,7 @@ namespace PacketExplorer
                 });
             }
 
-            File.WriteAllText("output.log", string.Join(
+            File.WriteAllText($"output-{offset}.log", string.Join(
                 Environment.NewLine + Environment.NewLine,
                 packetRecords.Select(record =>
                     string.Join(Environment.NewLine,
@@ -76,15 +64,5 @@ namespace PacketExplorer
                         $"TimeStamp: {record.TimeStamp}",
                         $"Packet Data: {string.Join(" ", record.PacketData)}"))));
         }
-    }
-
-    internal class PacketRecord
-    {
-        public uint OriginalLength { get; set; }
-        public uint IncludedLength { get; set; }
-        public uint PacketFlags { get; set; }
-        public uint CumulativeDrops { get; set; }
-        public ulong TimeStamp { get; set; }
-        public byte[] PacketData { get; set; }
     }
 }
