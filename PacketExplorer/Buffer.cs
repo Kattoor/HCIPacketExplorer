@@ -15,6 +15,13 @@ namespace PacketExplorer
                 Bytes
                     .Skip(_offset)
                     .Take(amount)
+                    .ToArray());
+        
+        private byte[] ReadReverse(int amount) =>
+            PostIncrement(
+                Bytes
+                    .Skip(_offset)
+                    .Take(amount)
                     .Reverse()
                     .ToArray());
 
@@ -25,10 +32,10 @@ namespace PacketExplorer
         }
 
         public uint ReadUInt32() =>
-            BitConverter.ToUInt32(Read(4));
+            BitConverter.ToUInt32(ReadReverse(4));
 
         public ulong ReadUInt64() =>
-            BitConverter.ToUInt64(Read(8));
+            BitConverter.ToUInt64(ReadReverse(8));
 
         public byte[] ReadVariableLength(int size) =>
             Read(size);

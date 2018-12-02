@@ -25,8 +25,8 @@ namespace PacketExplorer
         private static bool FileExists => bool.Parse(CmdCommand(
             $"adb shell \"[ -f /sdcard/btsnoop_hci.log ] && echo {bool.TrueString} || echo {bool.FalseString}\""));
 
-        private static void CreateFile() => CmdCommand("adb shell touch sdcard/btsnoop_hci.log");
-        private static void RemoveFile() => CmdCommand("adb shell rm sdcard/btsnoop_hci.log");
+        private static void CreateFile() => CmdCommand("adb shell touch /sdcard/btsnoop_hci.log");
+        private static void RemoveFile() => CmdCommand("adb shell rm /sdcard/btsnoop_hci.log");
 
         public static void ResetFile()
         {

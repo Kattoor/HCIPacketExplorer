@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "HCIPacketExplorer", "HCIPacketExplorer\HCIPacketExplorer.fsproj", "{884F2C62-43EB-4C16-AB33-6DF4C8781975}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PacketExplorer", "PacketExplorer\PacketExplorer.csproj", "{BDFBEBCA-4AFF-4270-B411-214A8241EF5D}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MetadataReader", "MetadataReader\MetadataReader.fsproj", "{63814C22-A7CB-4AA8-A8DA-E197982322BE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{884F2C62-43EB-4C16-AB33-6DF4C8781975}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{884F2C62-43EB-4C16-AB33-6DF4C8781975}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{884F2C62-43EB-4C16-AB33-6DF4C8781975}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{884F2C62-43EB-4C16-AB33-6DF4C8781975}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDFBEBCA-4AFF-4270-B411-214A8241EF5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDFBEBCA-4AFF-4270-B411-214A8241EF5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDFBEBCA-4AFF-4270-B411-214A8241EF5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDFBEBCA-4AFF-4270-B411-214A8241EF5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63814C22-A7CB-4AA8-A8DA-E197982322BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63814C22-A7CB-4AA8-A8DA-E197982322BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63814C22-A7CB-4AA8-A8DA-E197982322BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63814C22-A7CB-4AA8-A8DA-E197982322BE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
