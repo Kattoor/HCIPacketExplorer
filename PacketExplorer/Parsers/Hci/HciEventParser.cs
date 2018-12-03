@@ -23,18 +23,39 @@ namespace PacketExplorer.Parsers.Hci
 
             if (eventCode == "LE Meta")
             {
-                var subEvent = MetadataReader.Hci.Event.getLowEnergySubEventType(parameters[0]);
-                if (subEvent == "LE Connection Complete")
+                var bleEventCode = MetadataReader.Hci.Event.getBleEventCode(parameters[0]);
+
+                if (bleEventCode == "LE Connection Complete")
                 {
                     hciEventRecord.BleConnectionCompleteMetadata =
                         new BleConnectionCompleteMetadata
                         {
-                            SubEvent = subEvent,
+                            BleEventCode = bleEventCode,
                             Status = parameters[1],
-                            ConnectionHandle = parameters.Skip(2).Take(2).ToArray(),
+                            ConnectionHandle = parameters.Skip(2).Take(2).Reverse().ToArray(),
                             Role = parameters[4],
                             PeerAddressType = parameters[5],
-                            BdAddress = parameters.Skip(6).Take(6).ToArray()
+                            PeerAddress = parameters.Skip(6).Take(6).Reverse().ToArray(),
+                            ConnectionInterval = parameters.Skip(12).Take(2).Reverse().ToArray(),
+                            ConnectionLatency = parameters.Skip(14).Take(2).Reverse().ToArray(),
+                            ConnectionTimeout = parameters.Skip(16).Take(2).Reverse().ToArray(),
+                            ClockAccuracy = parameters[18]
+                        };
+                }
+
+                if (bleEventCode == "LE Advertising Report")
+                {
+                    hciEventRecord.BleAdvertisingReportMetadata =
+                        new BleAdvertisingReportMetadata
+                        {
+                            BleEventCode = bleEventCode,
+                            NumberOfDevices = parameters[1],
+                            DeviceInfoEventType = parameters[2],
+                            DeviceInfoAddressType = parameters[3],
+                            DeviceInfoAddress = parameters.Skip(4).Take(6).Reverse().ToArray(),
+                            DeviceInfoDataLength = parameters[10],
+                            DeviceInfoAdvertisingData = parameters.Skip(11).Take(31).Reverse().ToArray(),
+                            DeviceInfoRssi = parameters[42]
                         };
                 }
             }

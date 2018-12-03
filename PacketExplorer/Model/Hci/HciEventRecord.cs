@@ -10,6 +10,7 @@ namespace PacketExplorer.Model.Hci
         public byte[] Parameters { private get; set; }
 
         public BleConnectionCompleteMetadata BleConnectionCompleteMetadata { private get; set; }
+        public BleAdvertisingReportMetadata BleAdvertisingReportMetadata { get; set; }
 
         public override string ToString()
         {

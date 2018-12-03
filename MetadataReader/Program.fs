@@ -9,7 +9,7 @@ module Hci =
         | unknown -> "Unknown Packet Type: " + unknown.ToString()
     
     module Event =
-        let getLowEnergySubEventType byte =
+        let getBleEventCode byte =
             match byte with
             | 0x01uy -> "LE Connection Complete"
             | 0x02uy -> "LE Advertising Report"
