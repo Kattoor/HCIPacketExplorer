@@ -45,6 +45,7 @@ namespace PacketExplorer.Parsers.Hci
 
                 if (bleEventCode == "LE Advertising Report")
                 {
+                    var deviceInfoDataLength = parameters[10];
                     hciEventRecord.BleAdvertisingReportMetadata =
                         new BleAdvertisingReportMetadata
                         {
@@ -53,9 +54,9 @@ namespace PacketExplorer.Parsers.Hci
                             DeviceInfoEventType = parameters[2],
                             DeviceInfoAddressType = parameters[3],
                             DeviceInfoAddress = parameters.Skip(4).Take(6).Reverse().ToArray(),
-                            DeviceInfoDataLength = parameters[10],
-                            DeviceInfoAdvertisingData = parameters.Skip(11).Take(31).Reverse().ToArray(),
-                            DeviceInfoRssi = parameters[42]
+                            DeviceInfoDataLength = deviceInfoDataLength,
+                            DeviceInfoAdvertisingData = parameters.Skip(11).Take(deviceInfoDataLength).Reverse().ToArray(),
+                            DeviceInfoRssi = parameters[11 + deviceInfoDataLength]
                         };
                 }
             }

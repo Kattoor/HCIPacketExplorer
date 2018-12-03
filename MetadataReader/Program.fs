@@ -162,7 +162,10 @@ module Hci =
             | unknown -> "Unknown (OGF, OCF): (" + unknown.ToString() + ", " + ocf.ToString() + ")"
     
     module AsynchronousData =
-        let getHandle (bytes : byte []) = (((bytes.[1] &&& 0b00001111uy) <<< 8) ||| bytes.[0])
+        let getHandle (bytes : byte []) : byte [] =
+            [| bytes.[1] &&& 0b00001111uy
+               bytes.[0] |]
+        
         let getPbFlag (byte : byte) = (byte >>> 4) &&& 0b11uy
         let getBcFlag (byte : byte) = byte >>> 6
         let getDataTotalLength (bytes : byte []) = (bytes.[1] <<< 8) ||| bytes.[0]
