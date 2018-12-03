@@ -1,7 +1,7 @@
 using System;
 using System.Globalization;
 
-namespace PacketExplorer
+namespace PacketExplorer.Model.BtSnoop
 {
     public class PacketRecord
     {
@@ -12,8 +12,6 @@ namespace PacketExplorer
         public ulong Timestamp { private get; set; }
         public byte[] PacketData { get; set; }
 
-        public PacketMetadata Metadata { private get; set; }
-
         public override string ToString()
         {
             return string.Join(Environment.NewLine,
@@ -22,8 +20,7 @@ namespace PacketExplorer
                 $"Packet Flags: {PacketFlags}",
                 $"Cumulative Drops: {CumulativeDrops}",
                 $"Timestamp: {TimeZoneInfo.ConvertTimeFromUtc(DateTime.UnixEpoch.AddMilliseconds((long) ((Timestamp - 0x00dcddb30f2f8000) / 1000)), TimeZoneInfo.Local).ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture)}",
-                $"Packet Data: {BitConverter.ToString(PacketData).Replace("-",":")}",
-                Metadata.ToString());
+                $"Packet Data: {BitConverter.ToString(PacketData).Replace("-", ":")}");
         }
     }
 }

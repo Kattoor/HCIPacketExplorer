@@ -16,7 +16,7 @@ namespace PacketExplorer
                     .Skip(_offset)
                     .Take(amount)
                     .ToArray());
-        
+
         private byte[] ReadReverse(int amount) =>
             PostIncrement(
                 Bytes

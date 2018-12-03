@@ -6,10 +6,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Content Include="btsnoop_hci.log" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\MetadataReader\MetadataReader.fsproj" />
     </ItemGroup>
 
