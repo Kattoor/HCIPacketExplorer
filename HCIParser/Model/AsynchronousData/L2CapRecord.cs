@@ -1,3 +1,5 @@
+using System;
+
 namespace HCIParser.Model.AsynchronousData
 {
     public class L2CapRecord
@@ -9,10 +11,12 @@ namespace HCIParser.Model.AsynchronousData
         
         public override string ToString()
         {
+            var payload = BitConverter.ToString(Payload).Split("-");
+            
             return "{" +
                    $"\"length\": \"{Length}\"," +
                    $"\"cid\": \"{Cid}\"," +
-                   $"\"payload\": \"{Payload}\"," +
+                   $"\"payload\": [{(payload.Length > 0 && payload[0] != "" ? "\"" + string.Join("\",\"", payload) + "\"" : "")}]," +
                    $"\"attributeProtocolRecord\": {AttributeProtocolRecord?.ToString() ?? "{}"}" +
                    "}";
         }

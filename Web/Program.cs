@@ -47,11 +47,11 @@ namespace Web
                         var btSnoopPacketRecords = new BtSnoopParser(btSnoopDeltaBytes).Parse();
                         var hciRecords = new HciParser(btSnoopPacketRecords).Parse();
 
-                        var zippedRecords = btSnoopPacketRecords.Zip(hciRecords,
+                        /*var zippedRecords = btSnoopPacketRecords.Zip(hciRecords,
                             (packetRecord, hciRecord) =>
-                                packetRecord.ToString() + "," + hciRecord.ToString());
+                                packetRecord.ToString() + "," + hciRecord.ToString());*/
 
-                        var output = "[" + string.Join(",", zippedRecords) + "]";
+                        var output = "[" + string.Join(",", hciRecords) + "]";
 
                         byteArray = Encoding.ASCII.GetBytes(output);
                         break;

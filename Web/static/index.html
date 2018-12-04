@@ -18,33 +18,44 @@
 
 <div class="container">
     <div class="section">
-        <ul class="collapsible expandable">
-            <li>
-                <div class="collapsible-header">Title</div>
-                <div class="collapsible-body"><span>First Line <br> Second Line</span></div>
-            </li>
-            <li>
-                <div class="collapsible-header">Title</div>
-                <div class="collapsible-body"><span>First Line <br> Second Line</span></div>
-            </li>
-            <li>
-                <div class="collapsible-header">Title</div>
-                <div class="collapsible-body"><span>First Line <br> Second Line</span></div>
-            </li>
-            <li>
-                <div class="collapsible-header">Title</div>
-                <div class="collapsible-body"><span>First Line <br> Second Line</span></div>
-            </li>
-        </ul>
+        <ul id="item-container" class="collapsible expandable"></ul>
     </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var elems = document.querySelectorAll('.collapsible.expandable');
-        var instances = M.Collapsible.init(elems, {accordion: false});
+        const elems = document.querySelectorAll('.collapsible.expandable');
+        const instances = M.Collapsible.init(elems, {accordion: false});
     });
+
+    setInterval(() => {
+        fetch('http://localhost:8080/delta').then(response => response.json()).then(json => {
+            console.log(json);
+            
+            const container = document.getElementById('item-container');
+
+            let strBuilder = "";
+
+            json.forEach(record => {
+                strBuilder += "<li>";
+                if (record.packetType === "HCI Command packet") {
+                    strBuilder += `<div class=\"collapsible-header\">${record.packetType} - ${record.opCode}</div>`;
+                    strBuilder += "<div class=\"collapsible-body\">" +
+                        `<span>Parameter count: ${record.parameterTotalLength} <br> Parameters: ${record.parameters}</span>` +
+                        "</div>";
+                } else if (record.packetType === "HCI Event Packet") {
+                    strBuilder += `<div class=\"collapsible-header\">${record.packetType} - ${record.eventCode}</div>`;
+                    strBuilder += "<div class=\"collapsible-body\">" +
+                        `<span>Parameter count: ${record.parameterTotalLength} <br> Parameters: ${record.parameters}</span>` +
+                        "</div>";
+                }
+
+                strBuilder += "</li>";
+            });
+            container.innerHTML = strBuilder + container.innerHTML;
+        });
+    }, 2500);
 </script>
 </body>
 </html>
