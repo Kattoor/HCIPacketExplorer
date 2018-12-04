@@ -1,4 +1,4 @@
-namespace PacketExplorer.Model.Hci.Ble
+namespace HCIParser.Model.Ble
 {
     public class BleMetadata
     {

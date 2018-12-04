@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
         <TargetFramework>netcoreapp2.1</TargetFramework>
+        <AssemblyName>HCIParser</AssemblyName>
+        <RootNamespace>HCIParser</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\BtSnoop\BtSnoop.csproj" />
-      <ProjectReference Include="..\HCIParser\HCIParser.csproj" />
       <ProjectReference Include="..\MetadataReader\MetadataReader.fsproj" />
     </ItemGroup>
 

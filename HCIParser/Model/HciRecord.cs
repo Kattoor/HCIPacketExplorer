@@ -1,4 +1,4 @@
-namespace PacketExplorer.Model.Hci
+namespace HCIParser.Model
 {
     public class HciRecord
     {

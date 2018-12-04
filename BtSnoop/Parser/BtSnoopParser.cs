@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using PacketExplorer.Model.BtSnoop;
+using Buffer = BtSnoop.Parser.Buffer;
 
-namespace PacketExplorer.Parsers.BtSnoop
+namespace BtSnoop.Parser
 {
     public class BtSnoopParser
     {

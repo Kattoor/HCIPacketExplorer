@@ -1,9 +1,9 @@
 using System.Linq;
-using PacketExplorer.Model.BtSnoop;
-using PacketExplorer.Model.Hci;
-using PacketExplorer.Model.Hci.Ble;
+using BtSnoop.Parser;
+using HCIParser.Model;
+using HCIParser.Model.Ble;
 
-namespace PacketExplorer.Parsers.Hci
+namespace HCIParser.Parser
 {
     public class HciEventParser : IHciRecordParser
     {

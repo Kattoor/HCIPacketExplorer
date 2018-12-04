@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace PacketExplorer
+namespace BtSnoop.Interface
 {
     public static class Adb
     {

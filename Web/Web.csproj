@@ -6,9 +6,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Content Include="static\index.html" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\BtSnoop\BtSnoop.csproj" />
       <ProjectReference Include="..\HCIParser\HCIParser.csproj" />
-      <ProjectReference Include="..\MetadataReader\MetadataReader.fsproj" />
     </ItemGroup>
 
 </Project>

@@ -2,8 +2,9 @@
 using System.IO;
 using System.Linq;
 using System.Threading;
-using PacketExplorer.Parsers.BtSnoop;
-using PacketExplorer.Parsers.Hci;
+using BtSnoop.Interface;
+using BtSnoop.Parser;
+using HCIParser.Parser;
 
 namespace PacketExplorer
 {
@@ -11,29 +12,18 @@ namespace PacketExplorer
     {
         private static void Main()
         {
-            Adb.ResetFile();
-            var offset = 0;
             var count = 0;
-
+            var btSnoopInterface = new BtSnoopInterface();
             while (true)
             {
-                Thread.Sleep(1000);
-
                 Console.WriteLine("Round");
 
-                var deltaContent = Adb.FileContent(offset);
-                deltaContent = deltaContent.Length == 0 ? deltaContent : deltaContent.Substring(1);
+                Thread.Sleep(1000);
+                var btSnoopDeltaBytes = btSnoopInterface.RetrieveDelta();
+                var btSnoopPacketRecords = new BtSnoopParser(btSnoopDeltaBytes).Parse();
+                var hciRecords = new HciParser(btSnoopPacketRecords).Parse();
 
-                var hexValueArray = deltaContent.Split(" ");
-                if (hexValueArray.Length == 0 || hexValueArray[0] == "") continue;
-
-                var byteArray = hexValueArray.Select(hex => Convert.ToByte(hex, 16)).ToArray();
-                offset += byteArray.Length;
-
-                var packetRecords = new BtSnoopParser(byteArray).Parse();
-                var hciRecords = new HciParser(packetRecords).Parse().ToArray();
-
-                var zippedRecords = packetRecords.Zip(hciRecords,
+                var zippedRecords = btSnoopPacketRecords.Zip(hciRecords,
                     (packetRecord, hciRecord) => packetRecord.ToString() + Environment.NewLine + hciRecord.ToString());
 
                 File.WriteAllText($"output-{++count}.log", string.Join(

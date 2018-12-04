@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PacketExplorer
+namespace BtSnoop.Parser
 {
     public class Buffer
     {
